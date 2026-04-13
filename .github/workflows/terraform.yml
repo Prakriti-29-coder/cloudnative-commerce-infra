@@ -14,6 +14,10 @@ jobs:
   validate-and-provision:
     runs-on: ubuntu-latest
 
+    # ✅ ADD THIS (Terraform Cloud auth)
+    env:
+      TF_TOKEN_app_terraform_io: ${{ secrets.TFC_API_TOKEN }}
+
     defaults:
       run:
         working-directory: ./infrastructure
@@ -24,9 +28,6 @@ jobs:
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
-
-      - name: Terraform Login
-        run: echo "${{ secrets.TFC_API_TOKEN }}" | terraform login
 
       - name: Terraform Init
         run: terraform init
